@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use Illuminate\Http\Request;
 use App\Http\Requests\InputRequest;
 use Illuminate\Support\Facades\Route;
@@ -46,7 +47,8 @@ Route::any('/dashboard',function()
     return "This is Dashboard";
 });
 
-
+//Question 6
+Route::post("/contact/sendMail",ContactController::class);
 
 
 //Questio 7

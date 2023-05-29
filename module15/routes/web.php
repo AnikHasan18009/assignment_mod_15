@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\AboutController;
+
+use Faker\Provider\Lorem;
 use Illuminate\Http\Request;
 use App\Http\Requests\InputRequest;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormValidator;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,9 +47,12 @@ Route::any('/dashboard',function()
 });
 
 
-
+//Question 6
+Route::post("/contact/sendMail",ContactController::class);
 
 //Questio 7
 Route::any('/welcome',function(){ return view('welcome');});
 
-Route::get("/about",AboutController::class);
+
+
+
