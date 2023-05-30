@@ -4,9 +4,14 @@
 use Faker\Provider\Lorem;
 use Illuminate\Http\Request;
 use App\Http\Requests\InputRequest;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormValidator;
+use App\Http\Middleware\AuthMiddleware;
+use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +28,19 @@ Route::get('/form', function () {
     return view('form');
 });
 
-Route::post('/form/submit',
-function(Request $request){
-    $validator= $request->validate([
+Route::post('/form/submit',function(Request $request){
+
+    $v = Validator::make($request->all(), [
         'name' => 'required|string|min:2',
         'email' => 'required|email',
         'password' => 'required|string|min:8'
-]
-    );
-    return 'Registered successfully.';
+]);
+ 
+    if ($v->fails())
+    {
+        return redirect()->back()->withErrors($v->errors());
+    }
+    return redirect()->back()->with('success','Registered successfully');
 });
 
 
@@ -47,10 +56,19 @@ Route::any('/dashboard',function()
 });
 
 
+//Question 4
+Route::middleware(AuthMiddleware::class)->group(function () {
+Route::get("/profile",function(){return response("This is profile");});
+Route::get("/settings",function(){return response("This is settings");});
+});
+
 //Question 6
 Route::post("/contact/sendMail",ContactController::class);
 
-//Questio 7
+//Question 7
+Route::resource('post',PostController::class);
+
+//Questio 8
 Route::any('/welcome',function(){ return view('welcome');});
 
 

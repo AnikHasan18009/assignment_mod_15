@@ -22,6 +22,11 @@
             </ul>
         </div>
     @endif
+    @if (session('success'))
+    <div class="alert alert-success">
+        <h2>{{session('success')}}</h2>
+    </div>
+      @endif
    
         <form method="POST" action="form/submit">
   
@@ -44,5 +49,6 @@
             </div>
         </form>
     </div>
+    <script src="{{asset("js/bootstrap.bundle.js")}}"></script>
 </body>
 </html>

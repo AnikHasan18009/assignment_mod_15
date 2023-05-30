@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use App\Http\Requests\InputRequest;
 use Illuminate\Support\Facades\Route;
@@ -19,23 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-//Question 1
-Route::get('/form', function () {
-    return view('form');
-});
-
-Route::post('/form/submit',
-function(Request $request){
-    $validator= $request->validate([
-        'name' => 'required|string|min:2',
-        'email' => 'required|email',
-        'password' => 'required|string|min:8'
-]
-    );
-    return 'Registered successfully.';
-});
-
-
 //Question 2
 Route::any('/home',function()
 {
@@ -50,6 +34,15 @@ Route::any('/dashboard',function()
 //Question 6
 Route::post("/contact/sendMail",ContactController::class);
 
+//Question 5
+Route::get("/products",[ProductController::class,'index']);
+Route::get("/products/show/{id}",[ProductController::class,'show']);
+Route::get("/products/edit/{id}",[ProductController::class,'edit']);
+Route::post("/products/store",[ProductController::class,'store']);
+Route::put("/products/{id}",[ProductController::class,'update']);
+Route::delete("/products/{id}",[ProductController::class,'destroy']);
+Route::get("/products/create",[ProductController::class,'create']);
 
-//Questio 7
+
+//Questio 8
 Route::any('/welcome',function(){ return view('welcome');});
