@@ -55,6 +55,8 @@ Route::any('/dashboard',function()
     return "This is Dashboard";
 });
 
+//Question 3 \App\Http\Middleware\LogRequests::class
+
 
 //Question 4
 Route::middleware(AuthMiddleware::class)->group(function () {

@@ -30,8 +30,8 @@ class Handler extends ExceptionHandler
     }
     public function render($request, Throwable $e)
     {
-        if($request->is('api/products*')){
-            return response()->json(["messaged"=>"Records Missing"],400);
+        if($request->is('api/products*') || $request->is('post*')){
+            return response()->json(["message"=>"Records Missing"],400);
         }
     }
 }

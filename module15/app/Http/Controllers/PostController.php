@@ -12,7 +12,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts=Post::all();
+        return view("post.index",["posts" => $posts]);
     }
 
     /**
@@ -20,7 +21,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view("post.create");
     }
 
     /**
@@ -28,38 +29,59 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->title =  $request->input('title');
+        $post->content =  $request->input('content');
+        $post->author =  $request->input('author');
+
+        $post->save();
+
+        return redirect()->route('post.index')->with('message', 'Post created successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return view('post.show',['post'=>$post]);
+      
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('post.edit',['post'=>$post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->title =  $request->input('title');
+        $post->content =  $request->input('content');
+        $post->author =  $request->input('author');
+
+        $post->save();
+
+        return redirect()->route('post.index')->with('message', 'Post updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        
+        return redirect()->route('post.index')->with('message', 'Post deleted successfully');
     }
 }
